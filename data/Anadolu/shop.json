@@ -1,0 +1,76 @@
+{
+  "id": "OrderService/Shop",
+  "version": 1,
+  "name": "Anadolu",
+  "phone": "06128-2467916",
+  "sections": [
+    {
+      "name": "Döner",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Gericht"
+        },
+        {
+
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [1, "Döner", 4.8],
+        [2, "Döner mit Käse", 5.5],
+        [3, "Kleiner Döner", 4],
+        [4, "Kleiner Döner mit Käse", 4.5],
+        [5, "Big Döner mit Salat und Soße (extra Fleisch)", 6],
+        [6, "Dürüm", 5.5],
+        [7, "Dürüm mit Käse", 6],
+        [8, "Vegetarischer Döner", 3.5],
+        [9, "Vegetarischer Döner mit Käse", 4],
+        [10, "Lachmachum", 4],
+        [11, "Lachmachum mit Fleisch", 6],
+        [12, "Döner-Teller", 9],
+        [13, "Döner-Teller mit Pommes", 9],
+        [14, "Döner-Teller mit Reis", 9],
+        [15, "Döner überbacken mit Paprika, Pilzen und Tomatensoße", 9],
+        [16, "Döner-Box mit Pommes", 5.5],
+        [17, "Halloumi mit Salat Soße und Brot (Grillkäse)", 4.5],
+        [18, "Falafel mit Salat Soße und Brot", 4.5]
+      ]
+    },
+    {
+      "name": "Getränke",
+      "comments": false,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Getränk"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [100, "Wasser (0,3l)", 1.8],
+        [101, "Coca Cola (0,3l)", 1.8],
+        [102, "Fanta (0,3l)", 1.8],
+        [103, "Sprite (0,3l)", 1.8],
+        [104, "Mezzomix (0,3l)", 1.8],
+        [105, "Apfelschorle (0,3l)", 1.8],
+        [106, "0,3l Uludag", 1.8],
+        [107, "0,3l Ayran", 1.5],
+        [108, "Coca Cola (1,0l)", 2.4],
+        [109, "Fanta (1,0l)", 2.4],
+        [110, "Sprite (1,0l)", 2.4],
+        [111, "Mezzomix (1,0l)", 2.4],
+        [112, "Apfelschorle (1,0l)", 2.4]
+      ]
+    }
+  ]
+}

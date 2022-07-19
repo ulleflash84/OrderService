@@ -1,0 +1,13 @@
+{
+  "id": "OrderService/Order",
+  "version": 1,
+  "name": "David",
+  "paid": 5,
+  "items": [
+    {
+      "section": "Pizza",
+      "description": "1: Große Margherita",
+      "price": 5
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+    "id": "OrderService/Order",
+    "version": 1,
+    "name": "Sparfuchs",
+    "paid": 0,
+    "items": [
+        {
+            "description": "1: Kleine Margherita",
+            "price": 4.5
+        }
+    ]
+}

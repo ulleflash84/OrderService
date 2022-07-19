@@ -1,0 +1,13 @@
+{
+  "id": "OrderService/Order",
+  "version": 1,
+  "name": "Ulle",
+  "paid": 7.5,
+  "items": [
+    {
+      "section": "Pizza",
+      "description": "42: Große Bomba",
+      "price": 7
+    }
+  ]
+}

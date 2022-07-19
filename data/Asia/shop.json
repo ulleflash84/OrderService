@@ -1,0 +1,187 @@
+{
+  "id": "OrderService/Shop",
+  "version": 1,
+  "name": "Asia",
+  "phone": "06128-858106",
+  "sections": [
+    {
+      "name": "Thailändisch",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Gericht"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [20, "Gebratenes Schweinefleisch, Reis, Peperoni, Zwiebeln (scharf)", 6],
+        [21, "Gebratenes Schweinefleisch, Reis, Knoblauch, Pfeffer, Bohnen (etwas scharf)", 6],
+        [22, "Gebratenes Schweinefleisch, Reis, verschiedenes frisches Gemüse", 6],
+        [23, "Gebratenes Schweinefleisch, Reis, Bambus (in sehr scharfer Sauce)", 6],
+        [24, "Gebratenes Schweinefleisch, Reis, Gemüse in süß saurer Sauce", 6],
+        [25, "Gebratenes Schweinefleisch, Reis, roter Curry, Bohnen, Kokosmilch Sauce (scharf)", 6.7],
+        [26, "Gebratenes Schweinefleisch, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 6.7],
+        [27, "Gebratenes Schweinefleisch, Reis, Chillipaste, Gemüse, Knoblauch (scharf)", 6],
+
+        [30, "Gebratenes Rindfleisch, Reis, Peperoni, Zwiebeln (scharf)", 7],
+        [31, "Gebratenes Rindfleisch, Reis, Knoblauch, Pfeffer, Bohnen (etwas scharf)", 7],
+        [32, "Gebratenes Rindfleisch, Reis, verschiedenes frisches Gemüse", 7],
+        [33, "Gebratenes Rindfleisch, Reis, Bambus, Knoblauch (in sehr scharfer Sauce)", 7],
+        [34, "Gebratenes Rindfleisch, Reis, Gemüse in süß saurer Sauce", 7],
+        [35, "Gebratenes Rindfleisch, Reis, roter Curry, Bohnen, Kokosmilch Sauce (scharf)", 7.3],
+        [36, "Gebratenes Rindfleisch, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 7.3],
+        [37, "Gebratenes Rindfleisch, Reis, Chillipaste, Gemüse, Knoblauch (scharf)", 7],
+
+        [40, "Gebratenes Hühnerfleisch, Reis, Peperoni, Zwiebeln (scharf)", 6],
+        [41, "Gebratenes Hühnerfleisch, Reis, Knoblauch, Pfeffer, Bohnen (etwas scharf)", 6],
+        [42, "Gebratenes Hühnerfleisch, Reis, verschiedenes frisches Gemüse", 6],
+        [43, "Gebratenes Hühnerfleisch, Reis, Bambus, Knoblauch (in sehr scharfer Sauce)", 6],
+        [44, "Gebratenes Hühnerfleisch, Reis, Gemüse in süß saurer Sauce", 6],
+        [45, "Gebratenes Hühnerfleisch, Reis, roter Curry, Bohnen, Kokosmilch Sauce (scharf)", 6.7],
+        [46, "Gebratenes Hühnerfleisch, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 6.7],
+        [47, "Gebratenes Hühnerfleisch, Reis, Chillipaste, Gemüse, Knoblauch (scharf)", 6],
+
+        [50, "Knusprige Ente, Reis, verschiedenes frisches Gemüse", 8],
+        [51, "Knusprige Ente, Reis, Paprika, frisches Gemüse, Knoblauch in Hoisin Sauce (scharf)", 8],
+        [52, "Knusprige Ente, Reis, Peperoni, Zwiebeln (scharf)", 8],
+        [54, "Knusprige Ente, Reis mit süß saurer Sauce", 8],
+        [55, "Knusprige Ente, Reis, Chillipaste, Gemüse, Knoblauch (scharf)", 8],
+        [56, "Knusprige Ente, Reis, Knoblauch, Pfeffer, Bohnen (etwas scharf)", 8],
+        [57, "Knusprige Ente, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 8.7],
+
+        [60, "Knusprige Hähnchenschenkel, Reis, verschiedenes Gemüse", 7],
+        [61, "Knusprige Hähnchenschenkel, Reis, Paprika, Morcheln, Bambus, Knoblauch in Hoisin Sauce (scharf)", 7],
+        [62, "Knusprige Hähnchenschenkel, Reis, Peperoni, Zwiebeln (scharf)", 7],
+        [64, "Knusprige Hähnchenschenkel, Reis, süß-saurer Sauce", 7],
+        [65, "Knusprige Hähnchenschenkel, Reis, Chillipaste, Gemüse, Knoblauch Sauce (scharf)", 7],
+        [66, "Knusprige Hähnchenschenkel, Reis, Bohnen, Knoblauch, Pfeffer", 7],
+        [67, "Knusprige Hähnchenschenkel, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 7.5],
+
+        [70, "Gebratenes Garnelen, Reis, Peperoni, Zwiebeln (scharf)", 8.7],
+        [71, "Gebratenes Garnelen, Reis, Knoblauch, Pfeffer, Bohnen (etwas scharf)", 8.7],
+        [72, "Gebratenes Garnelen, Reis, verschiedenes frisches Gemüse", 8.7],
+        [73, "Gebratenes Garnelen, Reis, Bambus, Knoblauch (in sehr scharfer Sauce)", 8.7],
+        [74, "Gebratenes Garnelen, Reis, roter Curry, Bohnen, Kokosmilch Sauce (scharf)", 9.3],
+        [75, "Gebratenes Garnelen, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 9.3],
+        [76, "Gebratenes Garnelen, Reis, Chillipaste, Gemüse, Knoblauch (scharf)", 8.7],
+
+        [80, "Gebratener Tintenfisch, Reis, Peperoni, Zwiebeln (scharf)", 7],
+        [81, "Gebratener Tintenfisch, Reis, Knoblauch, Pfeffer, Bohnen (etwas scharf)", 7],
+        [82, "Gebratener Tintenfisch, Reis, Bambus, Knoblauch (in sehr scharfer Sauce)", 7],
+        [83, "Gebratenes Fischfilet, Reis, Bambus, Knoblauch (in sehr scharfer Sauce)", 7],
+        [84, "Gebratenes Fischfilet, Reis, Gemüse, süß-sauer Sauce", 7],
+        [85, "Gebratenes Fischfilet, Reis, roter Curry, Gemüse, Kokosmilch Sauce (scharf)", 8]
+      ]
+    },
+    {
+      "name": "Chinesisch",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Gericht"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [90, "Hühnerfilet, Reis, gelber Curry, Gemüse, Kokosmilch Sauce (scharf)", 6.2],
+        [91, "Hühnerfilet, Reis, Gemüse, Ananas, süß-saure Sauce", 6],
+        [92, "Hühnerfilet, Reis, verschiedenes Gemüse", 6],
+        [93, "Hühnerfilet, Reis, Gemüse, Knoblauch, Hoisin Sauce (scharf)", 6],
+        [94, "Hühnerfilet, Reis, Gemüse, Knoblauch Sauce (scharf)", 6],
+        [96, "Hühnerfilet, Reis, Zwiebeln (scharf)", 6],
+        [97, "Hühnerfilet Spezial, verschiedene Fleischsorten, Gemüse (scharf)", 7],
+
+        [100, "Schweinefleisch, Reis, gelber Curry, Gemüse, Kokosmilch Sauce (scharf)", 6.2],
+        [101, "Schweinefleisch, Reis, Gemüse, Ananas, süß-saure Sauce", 6],
+        [102, "Schweinefleisch, Reis, verschiedenes Gemüse", 6],
+        [103, "Schweinefleisch, Reis, Gemüse, Knoblauch, Hoisin Sauce (scharf)", 6],
+        [104, "Schweinefleisch, Reis, Gemüse, Knoblauch Sauce (scharf)", 6],
+        [105, "Schweinefleisch, Reis, Zwiebeln (scharf)", 6],
+        [106, "Schweinefleisch Spezial, verschiedene Fleischsorten, Gemüse (scharf)", 7],
+
+        [110, "Rindfleisch, Reis, gelber Curry, Gemüse, Kokosmilch Sauce (scharf)", 7.2],
+        [111, "Rindfleisch, Reis, Gemüse, Ananas, süß-saure Sauce", 7],
+        [112, "Rindfleisch, Reis, verschiedenes Gemüse", 7],
+        [113, "Rindfleisch, Reis, Gemüse, Knoblauch, Hoisin Sauce (scharf)", 7],
+        [114, "Rindfleisch, Reis, Gemüse, Knoblauch Sauce (scharf)", 7],
+        [115, "Rindfleisch, Reis, Zwiebeln (scharf)", 7],
+        [116, "Rindfleisch Spezial, verschiedene Fleischsorten, Gemüse (scharf)", 7],
+
+        [120, "Knusprige Ente, Reis, gelber Curry, Gemüse, Kokosmilch Sauce (scharf)", 8.2],
+        [121, "Knusprige Ente, Reis, Gemüse, Ananas, süß-saure Sauce", 8],
+        [123, "Knusprige Ente, Reis, verschiedenes Gemüse", 8],
+        [124, "Knusprige Ente, Reis, Gemüse, Knoblauch, Hoisin Sauce (scharf)", 8],
+        [125, "Knusprige Ente, Reis, Gemüse, Knoblauch Sauce (scharf)", 8],
+
+        [130, "Gebratene Nudeln, verschiedenes Gemüse", 4.7],
+        [131, "Gebratene Nudeln, Schweinefleisch, verschiedenes Gemüse", 5.1],
+        [132, "Gebratene Nudeln, Hühnerfleisch, verschiedenes Gemüse", 5.1],
+        [133, "Gebratene Nudeln, Rindfleisch, verschiedenes Gemüse", 5.5],
+        [134, "Bami Goreng mit Hühnerfleisch", 5.1],
+        [135, "Gebratene Nudeln, verschiedene Fleischsorten, Gemüse", 5.5],
+
+        [140, "Gebratener Reis, verschiedenes Gemüse", 4.7],
+        [141, "Gebratener Reis, Schweinefleisch, verschiedenes Gemüse", 5.1],
+        [142, "Gebratener Reis, Hühnerfleisch, verschiedenes Gemüse", 5.1],
+        [143, "Gebratener Reis, Rindfleisch, verschiedenes Gemüse", 5.5],
+        [144, "Nasi Goreng mit Hühnerfleisch", 5.1],
+        [145, "Gebratener Reis, verschiedene Fleischsorten, Gemüse", 5.5]
+      ]
+    },
+    {
+      "name": "Vegetarisch",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Gericht"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [150, "Gebratenes verschiedenes Gemüse, Soja Sauce", 5.5],
+        [151, "Gebratener Tofu, Gemüse, Soja Sauce", 6.2],
+        [152, "Gebratener Tofu, Gemüse, thailändischer roter Curry, Kokosmilch Sauce", 6.7]
+      ]
+    },
+    {
+      "name": "Häppchen",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Gericht"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [10, "Vegetarische Frühlingsrolle", 2.2],
+        [11, "Vietnamesische Frühlingsrolle (mit Fleisch)", 3],
+        [12, "Giew Grob Gebackene Wan Tan", 2.8],
+        [13, "Kroepoek (Krabbenchips)", 1.6]
+      ]
+    }
+  ]
+}

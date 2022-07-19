@@ -1,0 +1,13 @@
+{
+  "id": "OrderService/Order",
+  "version": 1,
+  "name": "Larissa",
+  "paid": 0,
+  "items": [
+    {
+      "section": "Salat",
+      "description": "54: Salat Vangelista ohne Oliven",
+      "price": 6
+    }
+  ]
+}

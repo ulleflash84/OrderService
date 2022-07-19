@@ -1,0 +1,231 @@
+{
+  "id": "OrderService/Shop",
+  "version": 1,
+  "name": "Portobello",
+  "phone": "06128-73104",
+  "sections": [
+    {
+      "name": "Pizza",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "Klein",
+          "tooltip": "26 cm",
+          "selectable": true,
+          "prefix": "Kleine"
+        },
+        {
+          "name": "Groß",
+          "tooltip": "30 cm",
+          "selectable": true,
+          "prefix": "Große"
+        }
+      ],
+      "data": [
+        [1, "Margherita (Tomaten, Käse)", 5, 5.5],
+        [2, "Salami (Tomaten, Käse, Salami)", 5.5, 6],
+        [3, "Prosciutto (Tomaten, Käse, Schinken)", 5.5, 6],
+        [4, "Peperoni (Tomaten, Käse, Peperoniwurst)", 6, 6.5],
+        [5, "Funghi (Tomaten, Käse, frische Champignons)", 5.5, 6],
+        [6, "Normale (Tomaten, Käse, Salami, frische Champignons)", 6, 6.5],
+        [7, "Lucia (Tomaten, Käse, Schinken, frische Champignons)", 6, 6.5],
+        [8, "Portobello (Tomaten, Käse, Schinken, Salami, frische Champignons, Artischocken)", 6.5, 7],
+        [9, "Spezial (Tomaten, Käse, frische Champignons, Salami, Peperoniwurst, Schinken)", 6.5, 7],
+        [10, "Hawaii (Tomaten, Käse, Schinken, Ananas)", 6, 6.5],
+        [11, "Diavolo (Tomaten, Käse, Peperoniwurst, Paprika, scharfe Peperoni)", 6.5, 7],
+        [12, "Panna (Tomaten, Käse, Schinken, Zwiebeln, frische Champignons)", 6.5, 7],
+        [13, "Vier Jahreszeiten (Tomaten, Käse, Schinken, frische Champigons, frische Paprika, Salami)", 6.5, 7],
+        [14, "Mafia (Tomaten, Käse, Schinken, Zwiebeln, Kapern, Knoblauch)", 6.5, 7],
+        [15, "Ala Chef (Tomaten, Käse, frische Paprika, Ei, Grüne Peperoni, Peperoniwurst, Oliven)", 7, 7.5],
+        [16, "Capricciosa (Tomaten, Käse, Salami, frische Paprika, Artischocken, Sardellen)", 7, 7.5],
+        [17, "Mare (Tomaten, Käse, Knoblauch, Meeresfrüchte)", 7, 8],
+        [18, "Tutto (Tomaten, Käse, Salami, Schinken, frische Paprika, frische Champignons, Peperoniwurst, Zwiebeln)", 7.5, 8],
+        [19, "Calzone (Gefüllte Pizzatasche mit Tomaten, Käse, Salami, frische Champignons, Peperoniwurst, frische Paprika, Schinken)", 7, 7.5],
+        [20, "Calzone Vegetaria (Gefüllte Pizzatasche mit Tomaten, Käse, Spinat, Mozzarella, Knoblauch)", 6.5, 7],
+        [21, "Vegetaria (Tomaten, Käse, Zwiebeln, frische Champignons, frische Paprika, Artischocken)", 6.5, 7],
+        [22, "Bolognese (Tomaten, Käse, Zwiebeln, frische Champignons, frische Paprika, Hackfleisch)", 7, 8],
+        [23, "Adria (Tomaten, Käse, Kapern, Oliven, Tomatenscheiben, Sardellen, Knoblauch)", 6.5, 7],
+        [24, "O Sole Mio (Tomaten, Käse, Schinken, frische Champignons, frische Paprika, Ei)", 6.5, 7],
+        [25, "Poppey (Tomaten, Käse, Spinat, Ei, Knoblauch)", 7, 7.5],
+        [26, "Caprese (Tomaten, Käse, Tomatenscheiben, Mozzarella)", 6.5, 7.5],
+        [27, "Mozzarella (Tomaten, Käse, Mozzarella)", 6.5, 7],
+        [28, "Gorgonzola (Tomaten, Käse, Gorgonzola)", 6.5, 7],
+        [29, "4 Formaggi (Tomaten, vier verschiedene Käsesorten)", 7.5, 8],
+        [30, "Matteo (Tomaten, Käse, Peperoniwurst, frische Paprika, Sardellen)", 6.5, 7],
+        [31, "Parma (Tomaten, Käse, Mozzarella, Rohschinken)", 7, 7.5],
+        [32, "Tonno (Tomaten, Käse, Thunfisch, Zwiebeln)", 6.5, 7.5],
+        [33, "Vulcano (Tomaten, Käse, Peperoniwurst, Oliven, Kapern, scharfe grüne Peperoni, Zwiebeln)", 7, 7.5],
+        [34, "Toni (Tomaten, Käse, Spinat, Broccoli, Knoblauch, Mozzarella, Gorgonzola)", 8.5, 9],
+        [35, "Pizza Pasta (Nudeln, Sahne, Käse, Schinken)", 7, 7.5],
+        [36, "Pizzabrot (mit Knoblauch)", 2, 3],
+        [37, "Peppone (Tomaten, Käse, Peperoniwurst, Speck, frische Champignons, frische Paprika - scharf", 7, 7.5],
+        [38, "Shrimps (Tomaten, Käse, Shrimps, Knoblauch, Rucola)", 7.5, 8],
+        [39, "Golosa (Tomaten, Käse, Tomatenscheiben, Rucola, Rohschinken, Parmesanstücke)", 8, 9],
+        [40, "Mexicana (Tomaten, Käse, Hackfleisch, Zwiebeln, frische Paprika, Mais - scharf)", 7.5, 8],
+        [41, "Bruschetta alla Matteo (Pizzabrot mit gemischtem Salat, Thunfisch, Mozzarella, Oliven, Zwiebeln)", 7, 8],
+        [42, "Bomba (Tomaten, Käse, Schinken, Salami, frische Champignons, Mozzarella)", 7, 7.5],
+        [43, "Portofino (Tomaten, Käse, Broccoli, Peperoniwurst, Mozzarella, Rucola)", 8, 8.5],
+        [44, "Carpaccio e Rucola (Tomaten, Käse, Rindfleisch, Rucola, Parmesanstücke)", 8.5, 9],
+        [45, "Biancaneve (Sahne, Käse, Hackfleisch, Zwiebeln)", 6.5, 7],
+        [46, "Salmone (Tomaten, Käse, Lachs, Shrimps, Knoblauch)", 7.5, 8],
+        [47, "Lachs und Spinat (Tomaten, Käse, Lachs, Spinat, Knoblauch)", 8, 9]
+      ],
+      "extras": [
+        ["Hackfleisch", 1.5],
+        ["Mozzarella", 1.5],
+        ["Spinat", 1.5],
+        ["Speck", 1.5],
+        ["Thunfisch", 1.5],
+        ["Gorgonzola", 1.5],
+        ["Broccoli", 1.5],
+        ["Salami", 1],
+        ["Schinken", 1],
+        ["Mais", 1],
+        ["Frische Paprika", 1],
+        ["Artischocken", 1],
+        ["Zwiebeln", 1],
+        ["Peperoniwurst", 1],
+        ["Sardellen", 1],
+        ["frische Champignons", 1],
+        ["Kapern", 1],
+        ["Käse", 1],
+        ["Oliven", 1],
+        ["scharfe Peperoni", 1],
+        ["milde Peperoni", 1],
+        ["Ei", 1],
+        ["Knoblauch", 1]
+      ]
+    },
+    {
+      "name": "Pasta",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [70, "Spaghetti Carbonara (Ei, Schinken, Sahne)", 7],
+        [71, "Spaghetti Casalinga (Tomatensauce, frische Champignions, Schinken)", 7],
+        [72, "Spaghetti Frutti di Mare (Tomatensauce, Meeresfrüchte)", 8.5],
+        [73, "Spaghetti al Diavola (frische Champignons, Kapern, grüne Peperoni, Tomatensauce, scharf gewürzt)", 7],
+        [74, "Spaghetti al Arrabiata (Schinken, Tomatensauce, frische Champignons, Oliven, scharfe grüne Peperoni)", 7.5],
+        [75, "Spaghetti (Muscheln, Knoblauch, Weisswein, Tomatensauce)", 8],
+        [76, "Spaghetti Tonno (Thunfisch, Erbsen, Knoblauch, Zwiebeln, Tomatensauce)", 8],
+        [77, "Rigatoni 4 Formaggi (vier verschiedene Käsesorten)", 7.5],
+        [78, "Rigatoni Boscaiola (frische Champignons, Oliven, Kapern, Sardellen, Tomatensauce)", 7],
+        [79, "Rigatoni alla Toni (Shrimps, Erbsen, Tomatensauce, Sahne)", 8],
+        [80, "Tortellini alla Panna (Sahne, Schinken, frische Champignons)", 7.5],
+        [81, "Tortellini Gorgonzola", 7.5],
+        [82, "Tagliatelle al Pesto (Schinken, Sahne, Parmesan, Pesto)", 8],
+        [83, "Tagliatelle Portobello (Schinken, Zwiebeln, Oliven, Brandy, Tomatensauce)", 8],
+        [84, "Gnocchi Gorgonzola", 7.5],
+        [85, "Gnocchi al Pomodoro (mit Tomatensauce)", 7],
+        [86, "Gnocchi al Pomodoro und Mozzarella", 7.5],
+        [87, "Gnocchi al Pesto mit Schinken", 7.5],
+        [88, "Penne al Matricciana (Speck, Zwiebeln, Tomatensauce)", 7.5],
+        [89, "Penne mit Spinat und Gorgonzola (Sahnesauce, Gorgonzola)", 8.5],
+        [90, "Penne mit Lachs und Tomaten-Sahnesauce", 8],
+        [91, "Farfalle Portobello (Schinken, frische Champignons, Erbsen in Tomatensauce & Sahne)", 8.5]
+      ]
+    },
+    {
+      "name": "Al Forno",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [92, "Lasagne", 7.5],
+        [93, "Canneloni", 7.5],
+        [94, "Rigatoni", 7],
+        [95, "Spaghetti", 7],
+        [96, "Tortellini", 7.5],
+        [97, "Combinazione", 7.5],
+        [98, "Cannelloni Vegetaria (Spinat und Käse)", 7.5],
+        [99, "Tagliatelle al Forno (Grüne oder weiße mit Käse überbacken)", 7],
+        [64, "Broccoli al Forno (Broccolli, Sahne, Knoblauch, frische Champignons", 6],
+        [65, "Intermezzo (Broccolli, Spinat, Sahnesauce, Knoblauch", 6.5]
+      ]
+    },
+    {
+      "name": "Salat",
+      "comments": true,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "Preis",
+          "selectable": true
+        }
+      ],
+      "data": [
+        [50, "Tomatensalat", 5.5],
+        [51, "Tomatensalat (mit Thunfisch und Zwiebeln)", 6.5],
+        [52, "Italienischer Salat (mit Tomaten, Käse, Ei, Zwiebeln, Schinken)", 6],
+        [53, "Italienischer Salat spezial (mit Tomaten, Käse, Ei, Schinken, Thunfisch, Zwiebeln)", 6.5],
+        [54, "Salat Vangelista (Grüner Salat mit Tomaten, Artischocken, Oliven, Mozzarella)", 6.5],
+        [55, "Italienischer Salat Capriocciosa (mit Tomaten, Käse, Ei, Zwiebeln, Thunfisch, Sardellen, Artischocken, grüne Peperoni)", 7.5],
+        [56, "Caprese (Tomaten, Mozzarella, gewürzt mit Essig/Öl)", 7],
+        [57, "Fitnessteller (Salami, Tomaten, Gurken, Mais, Putenfleisch)", 8],
+        [58, "Rucola Salat (mit Tomaten und Parmesanstücken, gewürzt mit Essig/Öl)", 6.5],
+        [59, "Bauernsalat (mit Tomaten, Gurken, Oliven, Mais, Schafskäse, milde Peperoni)", 7.5],
+        [60, "Salat Hawaii (grüner Salat, Shrimps, Ananas, Gurken, Tomaten, Mais)", 7.5]
+      ]
+    },
+    {
+      "name": "Getränke",
+      "comments": false,
+      "columns": [
+        {
+          "name": "#"
+        },
+        {
+          "name": "Name"
+        },
+        {
+          "name": "0,33 Liter",
+          "selectable": true,
+          "prefix": "0,33 Liter"
+        },
+        {
+          "name": "1 Liter",
+          "selectable": true,
+          "prefix": "1 Liter"
+        }
+      ],
+      "data": [
+        [100, "Coca Cola", 1.8, 2.5],
+        [101, "Coca Cola Light", 1.8, 2.5],
+        [102, "Fanta", 1.8, 2.5],
+        [103, "Mezzo-Mix", 1.8, 2.5]
+      ]
+    }
+  ]
+}

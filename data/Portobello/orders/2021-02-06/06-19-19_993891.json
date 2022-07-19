@@ -1,0 +1,26 @@
+{
+  "id": "OrderService/Order",
+  "version": 1,
+  "name": "Jonas",
+  "paid": 12.5,
+  "items": [
+    {
+      "section": "Pizza",
+      "description": "42: Große Bomba",
+      "price": 7
+    },
+    {
+      "section": "Salat",
+      "description": "52: Italienischer Salat ohne Zwiebeln",
+      "price": 5.5
+    },
+    {
+      "description": "100: 1 Liter Coca Cola",
+      "price": 2.5
+    },
+    {
+      "description": "10: dummy",
+      "price": 20.5
+    }
+  ]
+}

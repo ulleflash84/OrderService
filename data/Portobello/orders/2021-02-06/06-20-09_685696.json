@@ -1,0 +1,13 @@
+{
+  "id": "OrderService/Order",
+  "version": 1,
+  "name": "Markus",
+  "paid": 0,
+  "items": [
+    {
+      "section": "Pasta",
+      "description": "70: Spaghetti Carbonara",
+      "price": 6.5
+    }
+  ]
+}

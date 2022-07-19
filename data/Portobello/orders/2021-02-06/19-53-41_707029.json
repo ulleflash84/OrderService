@@ -1,0 +1,13 @@
+{
+    "id": "OrderService/Order",
+    "version": 1,
+    "name": "Panna",
+    "paid": 0,
+    "items": [
+        {
+            "section": "Pizza",
+            "description": "12: Kleine Panna ohne Zwiebeln",
+            "price": 6
+        }
+    ]
+}

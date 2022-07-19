@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <title>Bestellübersicht</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="external/bootstrap_v4.4.1.min.css">
+  <script src="external/jquery_v3.4.1.min.js"></script>
+  <script src="external/popper_v1.16.0.min.js"></script>
+  <script src="external/bootstrap_v4.4.1.min.js"></script>
+  <!--
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  -->
+
+  <script>
+    const formatter = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR'
+    })
+
+    var url = new URL(window.location.href);
+    var shopname = url.searchParams.get("shop");
+
+    main();
+
+    function main() {
+      setupTableFilters();
+      requestOrderList();
+    }
+
+    function setError(error) {
+      $('#loading-feedback').text(error);
+      $('#loading-feedback').addClass('alert');
+      $('#loading-feedback').addClass('alert-danger');
+    }
+
+    function requestOrderList() {
+      if (!shopname) {
+        console.log("set error");
+        // TODO set error does not work - already debugged, no idea what's the problem...
+        setError("Please enter shop in URL.");
+        console.log("error set");
+        return;
+      }
+
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var orderList = JSON.parse(this.responseText);
+          if (orderList.hasOwnProperty("error")) {
+            setError(orderList.error);
+            return;
+          }
+
+          if (orderList.id != "OrderService/OrderList") {
+            setError("Wrong content provided.");
+          }
+
+          requestOrders(orderList.orders);
+        }
+        // TODO error handling - see index.html
+      }
+
+      xmlhttp.responseType = "text";
+      xmlhttp.open("GET", orderListLink(), true);
+      xmlhttp.send();
+    }
+
+    function orderListLink() {
+      var orderListLink = "OrderList.php?shop=" + shopname;
+
+      var date = url.searchParams.get("date");
+      if (date) {
+        orderListLink = orderListLink + "&date=" + date;
+      }
+
+      return orderListLink;
+    }
+
+    function requestOrders(orderList) {
+      for (var i = 0; i < orderList.length; i++) {
+        requestOrder(orderList[i], orderList.length)
+      }
+    }
+
+    var orders = new Map();
+    function requestOrder(orderFile, numberOfOrders) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var order = JSON.parse(this.responseText);
+          delete order.id;
+          delete order.version;
+          orders.set(orderFile, order);
+
+          if (orders.size == numberOfOrders) {
+            orders = new Map([...orders.entries()].sort());
+            setupContent();
+          }
+        }
+        // TODO error handling
+      };
+      xmlhttp.responseType = "text";
+      xmlhttp.open("GET", orderFile, true);
+      xmlhttp.send();
+    }
+
+    function adaptedDescription(description) {
+      var num = 3 - description.indexOf(':');
+
+      for (var i = 0; i < num; i++) {
+        description = '0' + description;
+      }
+
+      return description;
+    }
+
+    function updateDifference(row) {
+      var sum = parseFloat(row.childNodes[2].getAttribute("sum"));
+      var paid = parseFloat(row.childNodes[3].getAttribute("paid"));
+
+      row.childNodes[4].innerHTML = formatter.format(paid - sum);
+      row.childNodes[4].setAttribute("class", paid - sum < 0.0 ? "text-danger" : "text-success");
+    }
+
+    function setupContent() {
+      var totalSum = 0.0;
+      var orderItems = new Map();
+      var pricePerItem = new Map();
+
+      for (var order of orders.entries()) {
+        var tr = document.createElement("tr");
+        tr.setAttribute("file-path", order[0]);
+        $('#tbody-orders').append(tr);
+
+        var td = document.createElement("td");
+        td.innerHTML = order[1].name;
+        tr.appendChild(td);
+
+        var orderDescription = "";
+        var sum = 0.0;
+        for (var j = 0; j < order[1].items.length; j++) {
+          var itemDescription = adaptedDescription(order[1].items[j].description);
+          var price = order[1].items[j].price;
+
+          if (j != 0) {
+            orderDescription += "<br />";
+          }
+          orderDescription += itemDescription;
+          sum += price;
+
+          if (!orderItems.has(itemDescription)) {
+            orderItems.set(itemDescription, 1);
+          } else {
+            orderItems.set(itemDescription, orderItems.get(itemDescription) + 1);
+          }
+
+          if (!pricePerItem.has(itemDescription)) {
+            pricePerItem.set(itemDescription, price);
+          }
+        }
+
+        td = document.createElement("td");
+        td.innerHTML = orderDescription;
+        tr.appendChild(td);
+
+        td = document.createElement("td");
+        td.setAttribute("align", "right");
+        td.setAttribute("sum", sum);
+        td.innerHTML = formatter.format(sum);
+        tr.appendChild(td);
+
+        td = document.createElement("td");
+        tr.appendChild(td);
+        td.setAttribute("align", "right");
+        td.setAttribute("paid", order[1].paid);
+        td.innerHTML = formatter.format(order[1].paid);
+        /*var input = document.createElement("input");
+        input.setAttribute("type", "number"); // TODO replace by text? show suffix €
+        input.setAttribute("value", order[1].paid);
+        input.setAttribute("step", "0.01");
+        input.setAttribute("min", "0");
+        // TODO on value changed - store value (where???) and recalculate difference
+        input.setAttribute("onkeypress", "return (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 44 || event.charCode == 0");
+        input.setAttribute("requested-sum", sum);
+        input.setAttribute("order-file", order[0]);
+        input.setAttribute("style", "text-align:right");
+        td.appendChild(input);*/
+
+        td = document.createElement("td");
+        td.setAttribute("align", "right");
+        td.innerHTML = formatter.format(-sum);
+        tr.appendChild(td);
+
+        td = document.createElement("td");
+        td.innerHTML = `<button id="order" class="btn btn-outline-danger" type="submit" onclick="deleteOrder(this)">Löschen</button>`;
+        tr.appendChild(td);
+
+        updateDifference(tr);
+
+        totalSum += sum;
+      }
+
+      orderItems = new Map([...orderItems.entries()].sort());
+
+      for (var orderItem of orderItems.entries()) {
+        var tr = document.createElement("tr");
+        $('#tbody-overview').append(tr);
+
+        var td = document.createElement("td");
+        td.innerHTML = orderItem[1];
+        tr.appendChild(td);
+
+        td = document.createElement("td");
+        td.innerHTML = orderItem[0];
+        tr.appendChild(td);
+
+        td = document.createElement("td");
+        td.innerHTML = formatter.format(pricePerItem.get(orderItem[0]) * orderItem[1]);
+        td.setAttribute("align", "right");
+        tr.appendChild(td);
+      }
+
+      addSum('#tbody-overview', 2, totalSum);
+
+      $('#loading-feedback').empty();
+      $('#content').removeClass('d-none');
+    }
+
+    function addSum(table, numberOfEmptyColumns, sum) {
+      var tr = document.createElement("tr");
+      $(table).append(tr);
+
+      for (var i = 0; i < numberOfEmptyColumns; i++) {
+        var td = document.createElement("td");
+      tr.appendChild(td);
+      }
+
+      var td = document.createElement("td");
+      td.setAttribute("align", "right");
+      td.innerHTML = "<b>Summe: " + formatter.format(sum) + "</b>";
+      tr.appendChild(td);
+    }
+
+    function deleteOrder(order) {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          if (this.responseText == "OK") {
+            order.parentNode.parentNode.parentNode.removeChild(order.parentNode.parentNode);
+          }
+        }
+        // TODO further error handling
+      };
+      xmlhttp.responseType = "text";
+      xmlhttp.open("GET", "DeleteOrder.php?order=" + order.parentNode.parentNode.getAttribute("file-path"), true);
+      xmlhttp.send();
+    }
+
+    function setupTableFilters() {
+      $(document).ready(function () {
+        $("#search-overview").on("keyup", function () {
+          var value = $(this).val().toLowerCase();
+          $("#tbody-overview tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+
+        $("#search-orders").on("keyup", function () {
+          var value = $(this).val().toLowerCase();
+          $("#tbody-orders tr").filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+      });
+    }
+  </script>
+</head>
+
+<body>
+  <div id="loading-feedback" class="container mt-3 mb-3">
+    <div class="align-middle spinner-border spinner-border-sm text-primary mr-2"></div>
+    <span class="align-middle">Inhalt wird geladen...</span>
+  </div>
+
+  <div id="content" class="container d-none">
+    <h1 id="header"></h1>
+
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#overview">Bestellübersicht</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#orders">Bestellungen</a>
+      </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content border p-2">
+      <div class="tab-pane container active" id="overview">
+        <input class="form-control mt-3 mb-3" id="search-overview" type="text" placeholder="Suchen...">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Anzahl</th>
+              <th>Beschreibung</th>
+              <th style="text-align:right">Preis</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-overview" />
+        </table>
+      </div>
+      <div class="tab-pane container fade" id="orders">
+        <input class="form-control mt-3 mb-3" id="search-orders" type="text" placeholder="Suchen...">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Bestellung</th>
+              <th>Summe</th>
+              <th>Bezahlt</th>
+              <th>Differenz</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-orders" />
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

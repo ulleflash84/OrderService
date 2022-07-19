@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <title>Bestellformular</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="external/bootstrap_v4.4.1.min.css">
+  <script src="external/jquery_v3.4.1.min.js"></script>
+  <script src="external/popper_v1.16.0.min.js"></script>
+  <script src="external/bootstrap_v4.4.1.min.js"></script>
+  <!--
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  -->
+
+  <script>
+    var url = new URL(window.location.href);
+    var shopname = url.searchParams.get("shop");
+    var user = url.searchParams.get("user");
+    var order = new Object();
+    var shop = new Object();
+
+    const formatter = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'EUR'
+    })
+
+    loadShop();
+
+    function normalize(input) {
+      return input.toLowerCase().replace(" ", "-").replace("ä", "ae").replace("ö", "oe").replace("ü", "ue");
+    }
+
+    function shortDescription(description) {
+      var position = description.indexOf(" (");
+
+      if (position < 0) {
+        return description;
+      } else {
+        return description.substr(0, position);
+      }
+    }
+
+    function resetSection(section) {
+      $('#section-' + normalize(section) + ' input:checked').prop("checked", false);
+      $('#comments-' + normalize(section)).val("");
+
+      evaluateOrder();
+    }
+
+    function sendOrder() {
+      $('#order-feedback').html(
+        `<div class="align-middle spinner-border spinner-border-sm text-primary mr-2"></div>
+        <span class="align-middle">Bestellung wird gesendet...</span>`
+      );
+
+      var xmlhttpPost = new XMLHttpRequest();
+      xmlhttpPost.open("POST", "OrderSaver.php?shop=" + shopname);
+      xmlhttpPost.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      xmlhttpPost.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          if (this.responseText == "OK") {
+            $('#order-feedback').html("Bestellung wurde erfolgreich gesendet.");
+          } else {
+            $('#order-feedback').html("Bestellung konnte nicht gesendet werden.<br />Bitte erneut versuchen.");
+          }
+        }
+        else if (this.readyState == 4) {
+          $('#order-feedback').html("Bestellung konnte nicht gesendet werden.<br />Bitte erneut versuchen.");
+        }
+      }
+      xmlhttpPost.send(JSON.stringify(order));
+    }
+
+    function evaluateOrder() {
+      var sumTotal = 0.0;
+      $("#summary").empty();
+      order = new Object();
+
+      order.id = "OrderService/Order";
+      order.version = 1;
+      order.name = $("#user").val();
+      order.paid = 0;
+      order.items = new Array();
+
+      for (var i = 0; i < shop.sections.length; i++) {
+        var sumSection = 0.0;
+        var description;
+
+        var radioButtons = $('#section-' + normalize(shop.sections[i].name) + ' input[type=radio]:checked');
+        if (radioButtons.length == 1) {
+          var item = new Object();
+
+          sumSection += parseFloat(radioButtons[0].getAttribute("price"));
+          description = radioButtons[0].getAttribute("description");
+
+          if (shop.sections[i].comments) {
+            var comments = $('#comments-' + normalize(shop.sections[i].name)).val();
+            if (comments.length > 0) {
+              description += " " + comments;
+            }
+          }
+
+          if (shop.sections[i].hasOwnProperty("extras")) {
+            var checkBoxes = $('#section-' + normalize(shop.sections[i].name) + ' input[type=checkbox]:checked');
+            for (var j = 0; j < checkBoxes.length; j++) {
+              sumSection += parseFloat(checkBoxes[j].getAttribute("price"));
+
+              if (j == 0) {
+                description += " - Extras: ";
+              } else {
+                if (j == checkBoxes.length - 1) {
+                  description += " und ";
+                } else {
+                  description += ", ";
+                }
+              }
+              description += checkBoxes[j].getAttribute("description");
+            }
+          }
+
+          item.description = description;
+          item.price = sumSection;
+          order.items.push(item);
+
+          var div = document.createElement("div");
+          div.setAttribute("class", "alert alert-success alert-dismissible fade show");
+          $("#summary").append(div);
+
+          var button = document.createElement("button");
+          button.setAttribute("type", "button");
+          button.setAttribute("class", "close");
+          button.setAttribute("data-dismiss", "alert");
+          button.setAttribute("onclick", "resetSection('" + normalize(shop.sections[i].name) + "')");
+          button.innerHTML = "&times;";
+          div.appendChild(button);
+
+          var span = document.createElement("span");
+          span.innerHTML = description;
+          div.appendChild(span);
+
+          var span = document.createElement("span");
+          span.setAttribute("class", "float-right");
+          span.innerHTML = formatter.format(sumSection);
+          div.appendChild(span);
+        }
+
+        sumTotal += sumSection;
+      }
+      $('#sum').text("Summe: " + formatter.format(sumTotal));
+
+      var orderValid = true;
+
+      if ($('#summary').children().length == 0) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "alert alert-warning");
+        div.innerHTML = "Bitte Auswahl treffen!";
+        $("#summary").append(div);
+
+        orderValid = false;
+      }
+
+      if ($("#user").val().length == 0) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "alert alert-warning");
+        div.innerHTML = "Bitte Namen eingeben!";
+        $("#summary").append(div);
+
+        orderValid = false;
+      }
+
+      if (orderValid) {
+        $('#order').removeAttr("disabled");
+      }
+      else {
+        $('#order').attr("disabled", "disabled");
+      }
+    }
+
+    function setupShop() {
+      var content = document.createElement("div");
+      content.setAttribute("class", "container");
+
+      var h1 = document.createElement("h1");
+      h1.innerHTML = "Bestellformular " + shop.name + " - Telefon: " + shop.phone;
+      content.appendChild(h1);
+
+      var ul = document.createElement("ul");
+      ul.setAttribute("class", "nav nav-tabs");
+      content.appendChild(ul);
+
+      // set up navigation tabs
+      for (var i = 0; i < shop.sections.length; i++) {
+        var li = document.createElement("li");
+        li.setAttribute("class", "nav-item");
+        ul.appendChild(li);
+
+        var a = document.createElement("a");
+        a.setAttribute("class", i == 0 ? "nav-link active" : "nav-link");
+        a.setAttribute("data-toggle", "tab")
+        a.setAttribute("href", "#section-" + normalize(shop.sections[i].name));
+        a.innerHTML = shop.sections[i].name;
+        li.appendChild(a);
+      }
+
+      // setup tabs
+      var tabs = document.createElement("div");
+      tabs.setAttribute("class", "tab-content border p-2");
+      content.appendChild(tabs);
+
+      for (var i = 0; i < shop.sections.length; i++) {
+        var tab = document.createElement("div");
+        tab.setAttribute("class", i == 0 ? "tab-pane container active" : "tab-pane container fade");
+        tab.setAttribute("id", "section-" + normalize(shop.sections[i].name));
+        tabs.appendChild(tab);
+
+        var id = "tbody" + normalize(shop.sections[i].name);
+
+        var filterFunction = "var value = $(this).val().toLowerCase();";
+        filterFunction += "$(\"#" + id + " tr\").filter(function () {";
+        filterFunction += "  $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)";
+        filterFunction += "});";
+
+        var input = document.createElement("input");
+        input.setAttribute("class", "form-control mt-3 mb-3");
+        input.setAttribute("type", "text");
+        input.setAttribute("placeholder", "Suche...");
+        input.setAttribute("onkeyup", filterFunction);
+        tab.appendChild(input);
+
+        var table = document.createElement("table");
+        table.setAttribute("class", "table table-hover");
+        tab.appendChild(table);
+
+        var thead = document.createElement("thead");
+        table.appendChild(thead);
+
+        var tr = document.createElement("tr");
+        thead.appendChild(tr);
+
+        // table headers
+        for (var j = 0; j < shop.sections[i].columns.length; j++) {
+          var th = document.createElement("th");
+          tr.appendChild(th);
+
+          if (shop.sections[i].columns[j].hasOwnProperty("tooltip")) {
+            var a = document.createElement("a");
+            a.setAttribute("href", "#");
+            a.setAttribute("data-toggle", "tooltip");
+            a.setAttribute("title", shop.sections[i].columns[j].tooltip);
+            a.innerHTML = shop.sections[i].columns[j].name;
+            th.appendChild(a);
+          } else {
+            th.innerHTML = shop.sections[i].columns[j].name;
+          }
+        }
+
+        var tbody = document.createElement("tbody");
+        tbody.setAttribute("id", id);
+        table.appendChild(tbody);
+
+        // table data
+        for (var j = 0; j < shop.sections[i].data.length; j++) {
+          var tr = document.createElement("tr");
+          tbody.appendChild(tr);
+
+          for (var k = 0; k < shop.sections[i].data[j].length; k++) {
+            var data = shop.sections[i].data[j][k];
+
+            var td = document.createElement("td");
+
+            if (shop.sections[i].columns[k].name == "Name") {
+              data = data.replace(" (", "<br /><small>");
+              data = data.replace(")", "</small>");
+              td.innerHTML = data;
+            } else if (shop.sections[i].columns[k].hasOwnProperty("selectable")) {
+              var input = document.createElement("input");
+              input.setAttribute("id", shop.sections[i].data[j][0] + "-" + normalize(shop.sections[i].columns[k].name));
+              input.setAttribute("type", "radio");
+              input.setAttribute("name", "selection-" + normalize(shop.sections[i].name));
+              input.setAttribute("price", data);
+
+              var description = shortDescription(shop.sections[i].data[j][1]);
+
+              if (shop.sections[i].columns[k].hasOwnProperty("prefix")) {
+                description = shop.sections[i].columns[k].prefix + " " + description;
+              }
+
+              description = shop.sections[i].data[j][0] + ": " + description
+
+              input.setAttribute("description", description);
+              td.appendChild(input);
+
+              var label = document.createElement("label");
+              label.setAttribute("for", shop.sections[i].data[j][0] + "-" + normalize(shop.sections[i].columns[k].name));
+              label.setAttribute("class", "ml-2");
+
+              label.innerHTML = formatter.format(data);
+              td.appendChild(label);
+            } else {
+              td.innerHTML = data;
+            }
+
+            tr.appendChild(td);
+          }
+        }
+
+        // comments
+        if (shop.sections[i].comments) {
+          var div = document.createElement("div");
+          div.setAttribute("class", "form-group pt-3");
+          tab.appendChild(div);
+
+          var label = document.createElement("label");
+          label.setAttribute("for", "comments-" + normalize(shop.sections[i].name));
+          label.innerHTML = "Kommentar:"
+          div.appendChild(label);
+
+          var input = document.createElement("input");
+          input.setAttribute("type", "text");
+          input.setAttribute("class", "form-control");
+          input.setAttribute("id", "comments-" + normalize(shop.sections[i].name));
+          input.setAttribute("placeholder", "z. B. ohne Zwiebeln");
+          input.setAttribute("onkeyup", "evaluateOrder()");
+          div.appendChild(input);
+        }
+
+        // extras
+        if (shop.sections[i].hasOwnProperty("extras")) {
+          var extras = document.createElement("div");
+          extras.setAttribute("class", "form-group pt-3");
+          tab.appendChild(extras);
+
+          var label = document.createElement("label");
+          label.innerHTML = "Extras:";
+          extras.appendChild(label);
+
+          var br = document.createElement("br");
+          extras.appendChild(br);
+
+          var row;
+          for (var j = 0; j < shop.sections[i].extras.length; j++) {
+            if (j % 4 == 0) {
+              row = document.createElement("div");
+              row.setAttribute("class", "row");
+              extras.append(row);
+            }
+
+            var div = document.createElement("div");
+            div.setAttribute("class", "col-sm-3");
+            row.appendChild(div);
+
+            var id = "extra-" + normalize(shop.sections[i].extras[j][0]);
+
+            var input = document.createElement("input");
+            input.setAttribute("id", id);
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("price", shop.sections[i].extras[j][1]);
+            input.setAttribute("description", shop.sections[i].extras[j][0]);
+            div.appendChild(input);
+
+            var label = document.createElement("label");
+            label.setAttribute("class", "ml-2 mr-2");
+            label.setAttribute("for", id);
+            label.innerHTML = shop.sections[i].extras[j][0] + " " + formatter.format(shop.sections[i].extras[j][1]);
+            div.appendChild(label);
+          }
+        }
+      }
+
+      var div = document.createElement("div");
+      div.setAttribute("class", "mt-3");
+      div.setAttribute("id", "summary");
+      content.appendChild(div);
+
+      var div = document.createElement("div");
+      div.setAttribute("class", "input-group mt-3 mb-3");
+      div.innerHTML = `
+          <div class="input-group-prepend">
+            <span class="input-group-text">Name:</span>
+          </div>
+          <input id="user" type="text" class="form-control" onkeyup="evaluateOrder()">
+          <div class="input-group-prepend">
+            <span id="sum" class="input-group-text">Summe: 0,00 €</span>
+          </div>
+          <div class="input-group-append">
+            <button id="order" class="btn btn-outline-success" data-toggle="modal" data-target="#modal" type="submit" disabled onclick="sendOrder()">Bestellen</button>
+          </div>`;
+      content.appendChild(div);
+
+      // set content
+      var currentContent = document.getElementById("content")
+      currentContent.parentNode.replaceChild(content, currentContent);
+
+      // init tooltips
+      $('[data-toggle="tooltip"]').tooltip();
+
+      // register radio buttons
+      $('input[type="radio"]').click(function () {
+        if ($(this).is(':checked')) {
+          evaluateOrder();
+        }
+      });
+
+      // register check boxes
+      $('input[type="checkbox"]').click(function () {
+        evaluateOrder();
+      });
+
+      // init user
+      $('#user').val(user);
+
+      evaluateOrder();
+    }
+
+    function loadShop() {
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          shop = JSON.parse(this.responseText);
+          setupShop();
+        }
+        else if (this.readyState == 4 && this.status == 404) {
+          $('#content').text("Bitte existierenden Shop in der URL angeben.");
+        }
+        else {
+          $('#content').text("Unbekannter Fehler. Bitte probieren Sie es später noch einmal.");
+        }
+      };
+      xmlhttp.responseType = "text";
+      xmlhttp.open("GET", "data/" + shopname + "/shop.json", true); // TODO Create php page which does error handling.
+      xmlhttp.send();
+    }
+  </script>
+</head>
+
+<body>
+  <div id="content" class="container mt-3">
+    <div class="align-middle spinner-border spinner-border-sm text-primary mr-2"></div>
+    <span class="align-middle">Bestellformular wird geladen...</span>
+  </div>
+
+  <!-- TODO move static content here - see admin.html -->
+
+  <div class="modal" id="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Status der Bestellung</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div id="order-feedback" class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-dismiss="modal">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
